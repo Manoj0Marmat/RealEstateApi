@@ -14,43 +14,59 @@ namespace RealEstateApi.Controllers
 
         // GET: api/<CategoriesController>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IActionResult Get()
         {
-            return _dbContext.Categories;
+            return Ok(_dbContext.Categories);
         }
 
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
-        public Category Get(int id)
+        public IActionResult Get(int id)
         {
-            return _dbContext.Categories.FirstOrDefault(c => c.Id==id);
+            var category = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
         }
 
         // POST api/<CategoriesController>
         [HttpPost]
-        public void Post([FromBody] Category category)
+        public IActionResult Post([FromBody] Category category)
         {
             _dbContext.Categories.Add(category);
             _dbContext.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
         }
 
         // PUT api/<CategoriesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Category category)
+        public IActionResult Put(int id, [FromBody] Category categoryObj)
         {
-            var obj = _dbContext.Categories.Find(id);
-            obj.Name = category.Name;
-            obj.ImageUrl = category.ImageUrl;
+            var category = _dbContext.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound("Record Not Found Against This Id: "+id);
+            }
+            category.Name = categoryObj.Name;
+            category.ImageUrl = categoryObj.ImageUrl;
             _dbContext.SaveChanges();
+            return Ok("Record Updated.");
         }
 
         // DELETE api/<CategoriesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
             var category = _dbContext.Categories.Find(id);
+            if(category == null)
+            {
+                return NotFound("Record Not Found Against This Id: "+id);
+            }
             _dbContext.Categories.Remove(category);
             _dbContext.SaveChanges();
+            return Ok("Record Deleted.");
         }
     }
 }
