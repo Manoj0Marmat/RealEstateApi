@@ -1,0 +1,23 @@
+@RealEstateApi_HostAddress = http://localhost:7196
+
+GET {{RealEstateApi_HostAddress}}/api/Categories/
+Accept: application/json
+
+###
+
+GET {{RealEstateApi_HostAddress}}/api/Categories/1
+Accept: application/json
+
+###
+
+POST {{RealEstateApi_HostAddress}}/api/Categories/
+Accept: application/json
+
+###
+
+PUT {{RealEstateApi_HostAddress}}/api/Categories/
+Accept: application/json
+
+###
+
+
