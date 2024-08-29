@@ -19,6 +19,12 @@ namespace RealEstateApi.Controllers
             return Ok(_dbContext.Categories);
         }
 
+        [HttpGet("[Action]")]
+        public IActionResult SortCategories()
+        {
+            return Ok(_dbContext.Categories.OrderByDescending(x => x.Name));
+        }
+
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
