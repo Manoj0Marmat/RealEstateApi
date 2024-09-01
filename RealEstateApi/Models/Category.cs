@@ -9,5 +9,7 @@ namespace RealEstateApi.Models
         public string Name { get; set; }
         [Required(ErrorMessage ="Image Url Can Not Be NULL or Empty")]
         public string ImageUrl { get; set; }
+
+        public ICollection<Property> Properties { get; set; }
     }
 }
